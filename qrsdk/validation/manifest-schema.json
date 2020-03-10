@@ -1,0 +1,968 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "7.3.2 Version 1",
+  "description": "Schema for application manifest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "#/definitions/sanitized_string"
+    },
+    "description": {
+      "$ref": "#/definitions/sanitized_string"
+    },
+    "version": {
+      "$ref": "#/definitions/sanitized_app_version"
+    },
+    "uuid": {
+      "$ref": "#/definitions/sanitized_string"
+    },
+    "node_only": {
+      "$ref": "#/definitions/boolean_string"
+    },
+    "load_flask": {
+      "$ref": "#/definitions/boolean_string"
+    },
+    "resource_bundles": {
+      "$ref": "#/definitions/resource_bundles"
+    },
+    "areas": {
+      "$ref": "#/definitions/areas"
+    },
+    "dashboard_items": {
+      "$ref": "#/definitions/dashboard_items"
+    },
+    "rest_methods": {
+      "$ref": "#/definitions/rest_methods"
+    },
+    "configuration_pages": {
+      "$ref": "#/definitions/configuration_pages"
+    },
+    "gui_actions": {
+      "$ref": "#/definitions/gui_actions"
+    },
+    "page_scripts": {
+      "$ref": "#/definitions/page_scripts"
+    },
+    "metadata_providers": {
+      "$ref": "#/definitions/metadata_providers"
+    },
+    "resources": {
+      "$ref": "#/definitions/resources"
+    },
+    "fragments": {
+      "$ref": "#/definitions/fragments"
+    },
+    "custom_columns": {
+      "$ref": "#/definitions/custom_columns"
+    },
+    "services": {
+      "$ref": "#/definitions/services"
+    },
+    "environment_variables": {
+      "$ref": "#/definitions/environment_variables"
+    },
+    "authentication": {
+      "$ref": "#/definitions/authentication"
+    },
+    "dependencies": {
+      "$ref": "#/definitions/dependencies"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "version",
+    "uuid"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "load_flask"
+      ]
+    },
+    {
+      "required": [
+        "resource_bundles"
+      ]
+    },
+    {
+      "required": [
+        "areas"
+      ]
+    },
+    {
+      "required": [
+        "dashboard_items"
+      ]
+    },
+    {
+      "required": [
+        "rest_methods"
+      ]
+    },
+    {
+      "required": [
+        "configuration_pages"
+      ]
+    },
+    {
+      "required": [
+        "gui_actions"
+      ]
+    },
+    {
+      "required": [
+        "page_scripts"
+      ]
+    },
+    {
+      "required": [
+        "metadata_providers"
+      ]
+    },
+    {
+      "required": [
+        "resources"
+      ]
+    },
+    {
+      "required": [
+        "fragments"
+      ]
+    },
+    {
+      "required": [
+        "custom_columns"
+      ]
+    },
+    {
+      "required": [
+        "services"
+      ]
+    },
+    {
+      "required": [
+        "environment_variables"
+      ]
+    },
+    {
+      "required": [
+        "authentication"
+      ]
+    },
+    {
+      "required": [
+        "dependencies"
+      ]
+    }
+  ],
+  "definitions": {
+    "capability" : {
+      "type": "string",
+      "pattern": "^[a-zA-Z.]*$",
+      "minLength": 1
+    },
+    "sanitized_string" : {
+      "type": "string",
+      "pattern": "^[^<>]*$",
+      "minLength": 1
+    },
+    "optional_sanitized_string" : {
+      "type": "string",
+      "pattern": "^[^<>]*$"
+    },
+    "sanitized_url" : {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^/[^<>]*$"
+    },
+    "sanitized_environment_variables_name" : {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*[^='<>]*$"
+    },
+    "sanitized_metadata_type" : {
+      "type": "string",
+      "pattern": "^(ip|userName|ariel:)[^<>]*$"
+    },
+    "sanitized_services_name" : {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(a-z|A-Z|0-9)*[^ ;/?@&=+$,'|():{}\\[\\]^<>]*$"
+    },
+    "sanitized_app_version" : {
+      "type": "string",
+      "pattern": "^[^<> ]*$",
+      "minLength": 1
+    },
+    "resource_bundles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "bundle": {
+            "$ref": "#/definitions/sanitized_string"
+          }
+        },
+        "required": [
+          "locale",
+          "bundle"
+        ]
+      }
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "text": {
+            "$ref": "#/definitions/optional_sanitized_string"
+          },
+          "description": {
+            "$ref": "#/definitions/optional_sanitized_string"
+          },
+          "url": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/capability"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "text"
+        ]
+      }
+    },
+    "dashboard_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "description": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "rest_method": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/capability"
+            }
+          }
+        },
+        "required": [
+          "text",
+          "description",
+          "rest_method"
+        ]
+      }
+    },
+    "rest_methods": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "url": {
+            "$ref": "#/definitions/sanitized_url"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "HEAD",
+              "POST",
+              "PUT",
+              "DELETE",
+              "TRACE",
+              "OPTIONS",
+              "CONNECT",
+              "PATCH"
+            ]
+          },
+          "argument_names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/optional_sanitized_string"
+            }
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/capability"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "method",
+          "url"
+        ]
+      }
+    },
+    "configuration_pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "description": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[^<>]*$"
+          },
+          "url": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/capability"
+            }
+          }
+        },
+        "required": [
+          "text",
+          "description",
+          "url"
+        ]
+      }
+    },
+    "gui_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "text": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "description": {
+            "$ref": "#/definitions/optional_sanitized_string"
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[^<>]*$"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "javascript": {
+            "type": "string"
+          },
+          "rest_method": {
+            "$ref": "#/definitions/optional_sanitized_string"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {"$ref": "#/definitions/gui_action_group"},
+                {"$ref": "#/definitions/gui_action_group_deprecated"},
+                {"pattern": "^ariel:.*"}
+              ]
+            }
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/capability"}
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "groups"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "javascript"
+            ]
+          },
+          {
+            "required": [
+              "rest_method"
+            ]
+          }
+        ]
+      }
+    },
+    "page_scripts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "oneOf": [
+          {
+            "properties": {
+              "app_name": {"$ref": "#/definitions/application_name"},
+              "page_id": {"$ref": "#/definitions/page_identifier"},
+              "scripts": {"$ref": "#/definitions/scripts_list"},
+              "named_service": {
+                "$ref": "#/definitions/sanitized_string"
+              }
+            },
+            "required": ["app_name", "page_id", "scripts"]
+          },
+          {
+            "properties": {
+              "app_name": {"$ref": "#/definitions/application_name"},
+              "page_id": {"$ref": "#/definitions/wildcard"},
+              "scripts": {"$ref": "#/definitions/scripts_list"},
+              "named_service": {
+                "$ref": "#/definitions/sanitized_string"
+              }
+            },
+            "required": ["app_name", "page_id", "scripts"]
+          },
+          {
+            "properties": {
+              "app_name": {"$ref": "#/definitions/wildcard"},
+              "page_id": {"$ref": "#/definitions/wildcard"},
+              "scripts": {"$ref": "#/definitions/scripts_list"},
+              "named_service": {
+                "$ref": "#/definitions/sanitized_string"
+              }
+            },
+            "required": ["app_name", "page_id", "scripts"]
+          }
+        ]
+      }
+    },
+    "metadata_providers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rest_method": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "metadata_type": {
+            "$ref": "#/definitions/sanitized_metadata_type"
+          }
+        },
+        "required": [
+          "rest_method",
+          "metadata_type"
+        ]
+      }
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "memory": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "fragments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "app_name": {"$ref": "#/definitions/application_name"},
+          "page_id": {"$ref": "#/definitions/page_identifier"},
+          "location": {"$ref": "#/definitions/page_location"},
+          "rest_endpoint": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/capability"}
+          }
+        },
+        "required": [
+          "app_name",
+          "page_id",
+          "rest_endpoint"
+        ]
+      }
+    },
+    "custom_columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "page_id": {
+            "$ref": "#/definitions/page_identifier"
+          },
+          "rest_endpoint": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "named_service": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "required_capabilities": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/capability"}
+          }
+        },
+        "required": [
+          "label",
+          "page_id",
+          "rest_endpoint"
+        ]
+      }
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/sanitized_services_name"
+          },
+          "version": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum":65536
+          },
+          "command": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "endpoints": {
+            "type": "array",
+            "items": {
+              "type" : "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/sanitized_string"
+                },
+                "path": {
+                  "$ref": "#/definitions/sanitized_string"
+                },
+                "http_method": {
+                  "$ref": "#/definitions/sanitized_string"
+                },
+                "request_mime_type": {
+                  "$ref": "#/definitions/sanitized_string"
+                },
+                "request_body_type": {
+                  "type": "object"
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type" : "object",
+                    "properties": {
+                      "location": {"type": "string", "enum": ["PATH", "QUERY", "BODY"]},
+                      "name": {"$ref": "#/definitions/sanitized_string"},
+                      "definition": {"$ref": "#/definitions/sanitized_string"}
+                    },
+                    "required": ["location", "name"]
+                  }
+                },
+                "response": {
+                  "type": "object",
+                  "properties": {
+                    "mime_type": {"$ref": "#/definitions/sanitized_string"},
+                    "body_type": {"type": "object"}
+                  },
+                  "required": ["mime_type"]
+                },
+                "error_mime_type": {
+                  "$ref": "#/definitions/sanitized_string"
+                }
+              },
+              "required": [
+                "name",
+                "path",
+                "http_method"
+              ]
+            }
+          },
+          "autorestart": {
+            "type": "string",
+            "enum": ["true","false","unexpected"]
+          },
+          "process_name": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "numprocs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "directory": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "umask": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "autostart": {
+            "$ref": "#/definitions/boolean_string"
+          },
+          "startsecs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "startretries": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "exitcodes": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stopsignal": {
+            "type": "string",
+            "enum": ["TERM","HUP","INT","QUIT","KILL","USR1","USR2"]
+          },
+          "stopwaitsecs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "user": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "redirect_stderr": {
+            "$ref": "#/definitions/boolean_string"
+          },
+          "stdout_logfile": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stdout_logfile_maxbytes": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stdout_logfile_backups": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stdout_capture_maxbytes": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stdout_events_enabled": {
+            "$ref": "#/definitions/boolean_string"
+          },
+          "stderr_logfile": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stderr_logfile_maxbytes": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stderr_logfile_backups": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stderr_capture_maxbytes": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "stderr_events_enabled": {
+            "$ref": "#/definitions/boolean_string"
+          },
+          "environment": {
+            "$ref": "#/definitions/sanitized_string"
+          },
+          "serverurl": {
+            "$ref": "#/definitions/sanitized_string"
+          }
+        },
+        "required": [
+          "name",
+          "version"
+        ]
+      }
+    },
+    "environment_variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/sanitized_environment_variables_name"
+          },
+          "value": {
+            "$ref": "#/definitions/sanitized_string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "authentication": {
+      "type": "object",
+      "properties": {
+        "oauth2": {
+          "type": "object",
+          "properties": {
+            "authorisation_flow": {
+              "$ref": "#/definitions/oauth_flow_type"
+            },
+            "requested_capabilities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/sanitized_string"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "requested_capabilities"
+          ]
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "rpms_directory": {
+          "$ref": "#/definitions/sanitized_string"
+        },
+        "pip_directory": {
+          "$ref": "#/definitions/sanitized_string"
+        }
+      }
+    },
+    "oauth_flow_type": {
+      "type": "string",
+      "enum": [
+        "AUTHORIZATION_CODE",
+        "CLIENT_CREDENTIALS",
+        "IMPLICIT",
+        "RESOURCE_OWNER_PASSWORD"
+      ]
+    },
+    "boolean_string": {
+      "type": "string",
+      "enum": ["true", "false"]
+    },
+    "wildcard": {
+      "type": "string",
+      "enum": ["*"]
+    },
+    "page_location": {
+      "type": "string",
+      "enum": ["header", "footer"]
+    },
+    "scripts_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/sanitized_string"
+      }
+    },
+    "application_name": {
+      "type": "string",
+      "enum": [
+        "assetprofile",
+        "Assets",
+        "EventViewer",
+        "Forensics",
+        "QRadar",
+        "QVM",
+        "Reports",
+        "SEM",
+        "SRM",
+        "Surveillance"
+      ]
+    },
+    "page_identifier": {
+      "type": "string",
+      "enum": [
+        "ArcList",
+        "AssetDetailsVulnList",
+        "AssetList",
+        "AssetOwner",
+        "AttackerList",
+        "AttackerOffenseList",
+        "ByAssetList",
+        "ByAssetListForm",
+        "ByNetworkList",
+        "ByOpenServiceList",
+        "ByPolicyCheckList",
+        "ByPolicyList",
+        "ByVulnerabilityInstanceList",
+        "ByVulnerabilityList",
+        "CategoryList",
+        "CategoryTypeSummaryList",
+        "ConfigDeviceList",
+        "Dashboard",
+        "DomainList",
+        "EventDetails",
+        "EventList",
+        "ExceptionRulesList",
+        "ExclusionList",
+        "FlowDetails",
+        "FlowList",
+        "FlowsourceList",
+        "MaintainQuestions",
+        "ModelList",
+        "MyAssignedVulnerabilitiesList",
+        "MyOffenseList",
+        "NetworkAttackerList",
+        "NetworkHierarchyList",
+        "NetworkList",
+        "NetworkOffenseList",
+        "NetworkTopology",
+        "NotesList",
+        "ObfuscationProfiles",
+        "OffenseAnnotationList",
+        "OffenseAttackerList",
+        "OffenseCategoryList",
+        "OffenseDeviceList",
+        "OffenseList",
+        "OffenseNetworkList",
+        "OffenseRuleList",
+        "OffenseSummary",
+        "OffenseSummaryNotesList",
+        "OffenseTargetList",
+        "OffenseUserList",
+        "OperationalWindowList",
+        "ReferenceSetDetails",
+        "ReferenceSetElems",
+        "ReferenceSetRules",
+        "ReferenceSets",
+        "ReportTemplateListAll",
+        "ReportTemplateListDaily",
+        "ReportTemplateListHourly",
+        "ReportTemplateListManual",
+        "ReportTemplateListMonthly",
+        "ReportTemplateListWeekly",
+        "ResearchAdvisoriesList",
+        "ResearchNewsList",
+        "ResearchVulnerabilityList",
+        "RulesWizardExistingRules",
+        "ScanPolicyVulnerabilityList",
+        "ScanPolicy",
+        "ScanProfileList",
+        "ScanResultsList",
+        "ScannersAdminList",
+        "ScheduledScans",
+        "SensorDeviceList",
+        "ServerDiscovery",
+        "SimulationList",
+        "TargetAttackerList",
+        "TargetList",
+        "TargetNotesList",
+        "TargetOffenseList",
+        "TenantList",
+        "VaScannerSchedulesList",
+        "VaScannersList",
+        "allTabs",
+        "dataSources",
+        "plugins",
+        "systemConfiguration",
+        "trialLicense",
+        "viewConfiguration"
+      ]
+    },
+    "gui_action_group": {
+      "type": "string",
+      "enum": [
+        "AssetDetailsToolbar",
+        "AssetListToolbar",
+        "AssetOwnerToolbar",
+        "AttackerList",
+        "AttackerListSmallToolbar",
+        "AttackerListToolbar",
+        "ByAssetListFormToolbar",
+        "ByNetworkListToolbar",
+        "ByOpenServiceListToolbar",
+        "ByVulnerabilityInstanceListToolbar",
+        "ByVulnerabilityListToolbar",
+        "CategoryList",
+        "CategoryListToolbar",
+        "DomainListToolbar",
+        "EventDetailsToolbar",
+        "ExceptionRulesListToolbar",
+        "FlowDetailsToolbar",
+        "FlowsourceListToolbar",
+        "MyAssignedVulnerabilitiesListToolbar",
+        "NetworkHierarchyListToolbar",
+        "NetworkListSmallToolbar",
+        "NetworkListToolbar",
+        "NetworkSummaryToolbar",
+        "ObfuscationProfileContextMenu",
+        "OffenseListSmallToolbar",
+        "OffenseListToolbar",
+        "OffenseSummaryToolbar",
+        "ReferenceSetElemsContextMenu",
+        "ReferenceSetElemsToolbar",
+        "ReferenceSetRulesContextMenu",
+        "ReferenceSetRulesToolbar",
+        "ReferenceSetsContextMenu",
+        "ReferenceSetsToolbar",
+        "ReportTemplateListToolbar",
+        "ScanPolicyVulnerabilityListToolbar",
+        "SensorDeviceListToolbar",
+        "TargetList",
+        "TargetListToolbar",
+        "TargetSummaryToolbar",
+        "TenantListToolbar",
+        "VaScannerSchedulesListToolbar",
+        "VaScannersListToolbar",
+        "ViewNotesToolbar",
+        "ViewOffenseDevicesToolbar",
+        "ViewoffenseusersToolbar",
+        "VulnerabilityManagementListPopup",
+        "arielListToolbar",
+        "customEventListToolbar",
+        "ipPopup",
+        "userNamePopup"
+      ]
+    },
+    "gui_action_group_deprecated": {
+      "type": "string",
+      "enum": [
+        "OffenseList",
+        "NetworkList",
+        "HistoricalCorrelationToolbar",
+        "ObfuscationRightClick",
+        "OffenseRuleList",
+        "OffenseDeviceList",
+        "OffenseUserList",
+        "ByAssetListForm"
+      ]
+    }
+  }
+}
+

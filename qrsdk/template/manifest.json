@@ -1,0 +1,22 @@
+{
+    "name":"Hello World",
+    "description":"Application to display hello world",
+    "version":"1.0",
+
+    "areas": [
+        {
+            "id":"QHelloWorld",
+            "text":"Hello World",
+            "description":"A Hello World app",
+            "url":"index",
+            "required_capabilities":["ADMIN"]
+        }
+    ],
+
+    "dev_opts": [
+        {   
+            "console_ip":"9.180.225.32"
+        }    
+    ]
+
+}

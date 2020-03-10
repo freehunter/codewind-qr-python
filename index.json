@@ -1,0 +1,10 @@
+[
+{
+  "displayName":"QRApps Python",
+  "description":"CentOS and Python",
+  "language":"python",
+  "projectType":"python",
+  "location":"https://github.com/codewind-resources/nodeExpressTemplate",
+  "links": {"self":"/devfiles/nodeExpressTemplate/devfile.yaml" }
+}
+]

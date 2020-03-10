@@ -1,0 +1,22 @@
+extensionId: QRAppTemplate # This needs to be unique
+buildType: docker
+language: python
+creationType: template
+info:
+  provider: IBM
+  version: 0.0.1
+
+# Information to display in the UI 
+userInterface:
+    label: QRadar App Template
+    description: Includes CentOS and Python
+
+# Specify location of template code, either gitURL or location relative
+# to this .yaml file
+template:
+  giturl:
+  localpath: .
+
+# Additional details about the application
+application:
+  port: 5000  # The port the application runs on
